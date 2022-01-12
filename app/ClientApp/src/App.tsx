@@ -2,9 +2,10 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Catalog from './components/Catalog/Catalog';
 import ProductDetails from './components/Catalog/ProductDetails';
+import Footer from './components/Footer';
 import Header from './components/Header/Header';
 import About from './components/Pages/About';
-import { Welcome } from './components/Pages/Welcome';
+import Welcome from './components/Pages/Welcome';
 
 import './App.css';
 
@@ -26,6 +27,7 @@ export default function App() {
                     <Route path="/shop/:id" exact component={ProductDetails}>
                     </Route>
                 </Switch>
+                <Footer />
             </BrowserRouter>
         </div>
     );
