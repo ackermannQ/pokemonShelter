@@ -1,6 +1,5 @@
 import { createTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Button } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
@@ -45,7 +44,6 @@ theme.typography.subtitle1 = {
 
 export default function SecondaryToolbar(props: SecondaryToolbarProps) {
     const classes = useStyles();
-    const [badgeContent, setBadgeContent] = React.useState(0);
 
     return (
         <React.Fragment>
@@ -76,11 +74,10 @@ export default function SecondaryToolbar(props: SecondaryToolbarProps) {
                         </Router.Link>
                     ))}
                     <CartIcon
-                        badgeContent={badgeContent}
+                        badgeContent={null}
                     />
                 </Toolbar>
             </AppBar>
         </React.Fragment>
     );
 }
-
