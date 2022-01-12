@@ -1,9 +1,11 @@
 import { createTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
+import { Button } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
+import React from 'react';
 import * as Router from 'react-router-dom';
+import CartIcon from '../CartIcon';
 
 import pokeball from './images/pokeball.png'
 
@@ -43,6 +45,7 @@ theme.typography.subtitle1 = {
 
 export default function SecondaryToolbar(props: SecondaryToolbarProps) {
     const classes = useStyles();
+    const [badgeContent, setBadgeContent] = React.useState(0);
 
     return (
         <React.Fragment>
@@ -72,8 +75,12 @@ export default function SecondaryToolbar(props: SecondaryToolbarProps) {
                             </ThemeProvider>
                         </Router.Link>
                     ))}
+                    <CartIcon
+                        badgeContent={badgeContent}
+                    />
                 </Toolbar>
             </AppBar>
         </React.Fragment>
     );
 }
+
