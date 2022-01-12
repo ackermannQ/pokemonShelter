@@ -1,13 +1,14 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Catalog from './components/Catalog/Catalog';
+import Catalog from './components/Catalog';
 import ProductDetails from './components/Catalog/ProductDetails';
 import Footer from './components/Footer';
-import Header from './components/Header/Header';
+import Header from './components/Header';
 import About from './components/Pages/About';
 import Welcome from './components/Pages/Welcome';
 
 import './App.css';
+import Cart from './components/Cart';
 
 export default function App() {
     return (
@@ -24,8 +25,10 @@ export default function App() {
                     <Route path="/shop" exact>
                         <Catalog />
                     </Route>
-                    <Route path="/shop/:id" exact component={ProductDetails}>
+                    <Route path="/cart" exact>
+                        <Cart />
                     </Route>
+                    <Route path="/shop/:id" exact component={ProductDetails} />
                 </Switch>
                 <Footer />
             </BrowserRouter>
