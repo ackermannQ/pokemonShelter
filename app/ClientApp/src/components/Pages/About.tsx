@@ -12,13 +12,15 @@ import ReceiptOutlinedIcon from '@material-ui/icons/ReceiptOutlined';
 import React from 'react';
 import * as Router from 'react-router-dom';
 
+import pokemon from './images/pokemon.jpg'
+
 const useStyles = makeStyles((theme) => ({
     icon: {
         marginRight: theme.spacing(2),
     },
     heroContent: {
         backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing(8, 0, 6),
+        padding: theme.spacing(3, 0, 6),
     },
     heroButtons: {
         marginTop: theme.spacing(4),
@@ -84,18 +86,18 @@ export default function About() {
                                 <Card className={classes.card}>
                                     <CardMedia
                                         className={classes.cardMedia}
-                                        image="https://source.unsplash.com/random"
-                                        title="Laura Garlatti"
+                                        image={pokemon}
+                                        title="Pokemon"
                                     />
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom variant="h4" component="h2">
                                             Quentin Ackermann
                                         </Typography>
                                         <Typography variant="h5">
-                                            It's heart broken for a fellow Full Stack Engineer to see all these cute little Pokemons without a family.
+                                            It's heartbreaking for a fellow Full Stack Engineer to see all these cute little Pokemons without a family.
                                         </Typography>
                                         <Typography style={{ marginTop: '10px' }}>
-                                            As a consequence, I've decided to build this website to find a new home for all the Pokemons I've found.
+                                            As a consequence, I've decided to build this website to help all the Pokemons find a new home.
                                         </Typography>
                                         <Typography style={{ marginTop: '10px' }}>
                                             The front end is built with ReactJS, the backend using .Net Core 3.6/C#, the database is managed with SQL Management Server.
