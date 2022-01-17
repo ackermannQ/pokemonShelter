@@ -1,0 +1,32 @@
+root = true
+
+[*.{cs,sql,css,scss,tsx,json,js,ts,md,ps1}]
+indent_size = 4
+indent_style = space
+trim_trailing_whitespace = true
+insert_final_newline = true
+end_of_line=lf
+charset = utf-8-bom
+
+[*.{xml,cshtml,html,resx}]
+indent_size = 2
+indent_style = space
+trim_trailing_whitespace = true
+insert_final_newline = true
+end_of_line=lf
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+
+[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
+indent_size = 2
+
+[*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
+indent_size = 2
+
+# JSON files
+[*.json]
+indent_size = 2
