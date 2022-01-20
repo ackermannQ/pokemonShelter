@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography/Typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import Table from './Table';
+
 const useStyles = makeStyles((theme) => ({
     title: {
         backgroundColor: theme.palette.background.paper,
@@ -38,6 +40,7 @@ export default function Cart() {
                             We will check in every once in a while 👍
                         </Typography>
                     </Grid>
+                    <Table />
                     <Container className={classes.content} maxWidth="sm">
                         <Button style={{ marginLeft: '10px' }} component={Link} to='/shop/' variant="outlined" size="large" color="inherit">Return</Button>
                         <Button size="large" color="inherit" component={Link} to='/shop/'>Yay!</Button>

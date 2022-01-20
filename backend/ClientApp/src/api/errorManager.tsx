@@ -2,7 +2,6 @@ import { toast } from "react-toastify";
 
 const errorCodes = [400, 401, 403, 404, 500];
 
-
 export function manageError(error: any) {
     const responseData = error.response.data;
 
