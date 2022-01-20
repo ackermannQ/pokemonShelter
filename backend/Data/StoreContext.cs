@@ -10,5 +10,6 @@ namespace backend.Data
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Basket.Basket> Baskets { get; set; }
     }
 }
