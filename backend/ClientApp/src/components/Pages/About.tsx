@@ -69,7 +69,7 @@ export default function About() {
                                 </Grid>
                                 <Grid item>
                                     <Button variant="outlined" color="primary">
-                                        <Router.Link style={{ display: 'flex', textDecoration: 'none', color: 'inherit' }} to={"/magasin"}>
+                                        <Router.Link style={{ display: 'flex', textDecoration: 'none', color: 'inherit' }} to={"/shop"}>
                                             <ReceiptOutlinedIcon className={classes.icon} />
                                             Adoption 🥰
                                         </Router.Link>

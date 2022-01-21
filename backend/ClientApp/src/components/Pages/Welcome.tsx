@@ -46,14 +46,15 @@ export default function Welcome() {
                     <Container className={classes.content} maxWidth="sm">
                         <Button size="large" color="inherit" component={Link} to='/shop/'>Adopt</Button>
                         <Button style={{ marginLeft: '10px' }} component={Link} to='/about/' variant="outlined" size="large" color="inherit">About us</Button>
-                        <Button style={{ marginLeft: '10px' }} variant="outlined" size="large" color="secondary" onClick={triggerError}>Error Test</Button>
+                        {/* <Button style={{ marginLeft: '10px' }} variant="outlined" size="large" color="secondary" onClick={triggerError}>Error Test</Button> */}
                     </Container>
                 </Grid>
             </Container>
         </div>
     );
 
-    function triggerError() {
-        axios.get('/api/Buggy/validation-error').catch(manageError);
-    }
 }
+
+// function triggerError() {
+//     axios.get('/api/Buggy/validation-error').catch(manageError);
+// }
