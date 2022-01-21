@@ -1,11 +1,16 @@
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography/Typography';
+import { AxiosRequestConfig } from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { manageError } from '../../api/errorManager';
+import CircularProgressWrapper from '../Wrapper/CircularProgressWrapper';
+import { getBasket } from './httpRepository';
+import { IBasket } from './interfaces';
 import Table from './Table';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +26,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Basket() {
     const classes = useStyles();
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [basket, setBasket] = React.useState<IBasket | null>(null);
+
+    React.useEffect(() => {
+        getBasket()
+            .then((basket: AxiosRequestConfig) => setBasket(basket.data))
+            .catch(manageError)
+            .finally(() => setIsLoading(false));
+    }, []);
+
 
     return (
         <div className={classes.title}>
@@ -39,11 +54,13 @@ export default function Basket() {
                         <Typography gutterBottom variant="h6" component="h2" color="textSecondary">
                             We will check in every once in a while 👍
                         </Typography>
+                        <CircularProgressWrapper isLoading={isLoading}>
+                            <Table basket={basket} />
+                        </CircularProgressWrapper>
                     </Grid>
-                    <Table />
                     <Container className={classes.content} maxWidth="sm">
                         <Button style={{ marginLeft: '10px' }} component={Link} to='/shop/' variant="outlined" size="large" color="inherit">Return</Button>
-                        <Button size="large" color="inherit" component={Link} to='/shop/'>Yay!</Button>
+                        {basket && <Button size="large" color="inherit" component={Link} to='/shop/'>Yay!</Button>}
                     </Container>
                 </Grid>
             </Container>

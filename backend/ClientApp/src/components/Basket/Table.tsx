@@ -1,5 +1,8 @@
+import { Typography } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import * as React from 'react';
+
+import { IBasket } from './interfaces';
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 200 },
@@ -13,28 +16,23 @@ const columns: GridColDef[] = [
     }
 ];
 
-const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+interface TableProps {
+    basket: IBasket | null;
+}
 
-export default function Table() {
+export default function Table(props: TableProps) {
     return (
         <div style={{ height: 400, width: '100%' }}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-            />
+            {props.basket ?
+                <DataGrid
+                    rows={props.basket?.items?.map(item => {
+                        return { id: item.productId, firstName: item.name }
+                    }) ?? []}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                    checkboxSelection
+                /> : <Typography style={{ marginTop: '10%', marginBottom: '5%' }} variant="h6">Your don't want to adopt yet ...</Typography>}
         </div>
     );
 }

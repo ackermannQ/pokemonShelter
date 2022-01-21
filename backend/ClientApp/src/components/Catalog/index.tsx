@@ -4,6 +4,8 @@ import { CircularProgress, Typography } from '@mui/material';
 import { AxiosRequestConfig } from 'axios';
 import React from 'react';
 
+import { manageError } from '../../api/errorManager';
+import CircularProgressWrapper from '../Wrapper/CircularProgressWrapper';
 import { getAllProducts } from './httpRepository';
 import { IProduct } from './IProduct';
 import ProductList from './ProductList';
@@ -18,13 +20,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Catalog() {
     const classes = useStyles();
     const [products, setProducts] = React.useState<IProduct[]>([]);
-    const [loading, setLoading] = React.useState(true);
+    const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
         getAllProducts()
             .then((response: AxiosRequestConfig) => setProducts(response.data))
-            .catch(error => console.log(error))
-            .finally(() => setLoading(false));
+            .catch(manageError)
+            .finally(() => setIsLoading(false));
     }, []);
 
 
@@ -33,7 +35,9 @@ export default function Catalog() {
             Our little friends
         </Typography>
         <Container>
-            {loading ? <CircularProgress color="inherit" /> : <ProductList products={products} />}
+            <CircularProgressWrapper isLoading={isLoading}>
+                <ProductList products={products} />
+            </CircularProgressWrapper>
         </Container>
     </>
     );

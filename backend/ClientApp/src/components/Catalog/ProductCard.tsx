@@ -1,4 +1,5 @@
 import { Button, Typography } from '@material-ui/core';
+import LoadingButton from '@mui/lab/LoadingButton';
 import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -8,6 +9,8 @@ import CardMedia from '@mui/material/CardMedia';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { manageError } from '../../api/errorManager';
+import { AddItem } from '../Basket/httpRepository';
 import { IProduct } from './IProduct';
 
 interface ProductCardProps {
@@ -15,6 +18,13 @@ interface ProductCardProps {
 }
 
 export default function ProductCard(props: ProductCardProps) {
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    function handleAddItem(productId: number) {
+        setIsLoading(true);
+        AddItem(productId).catch(manageError).finally(() => setIsLoading(false));
+    }
+
     return (
         <>
             <Card sx={{ maxHeight: 400 }}>
@@ -46,7 +56,7 @@ export default function ProductCard(props: ProductCardProps) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">Adopt</Button>
+                    <LoadingButton loading={isLoading} onClick={() => handleAddItem(props.product.id)} color='inherit' size="small">Adopt</LoadingButton>
                     <Button style={{ marginLeft: '10px' }} component={Link} to={`/shop/${props.product.id}`} variant="outlined" size="small">More</Button>
                 </CardActions>
             </Card>
