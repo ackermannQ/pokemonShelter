@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Cart() {
+export default function Basket() {
     const classes = useStyles();
 
     return (

@@ -11,7 +11,7 @@ export default function CartIcon(props: CartIconProps) {
 
     return (
         <IconButton>
-            <Link to='/cart'>
+            <Link to='/basket'>
                 <Badge badgeContent={props.badgeContent ?? null} color="primary">
                     <FlightTakeoffTwoToneIcon sx={{ color: 'white' }} />
                 </Badge>

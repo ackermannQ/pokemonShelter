@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import Cart from './components/Cart';
+import Basket from './components/Basket';
 import Catalog from './components/Catalog';
 import ProductDetails from './components/Catalog/ProductDetails';
 import Footer from './components/Footer';
@@ -28,8 +28,8 @@ export default function App() {
                     <Route path="/shop" exact>
                         <Catalog />
                     </Route>
-                    <Route path="/cart" exact>
-                        <Cart />
+                    <Route path="/basket" exact>
+                        <Basket />
                     </Route>
                     <Route path="/shop/:id" exact component={ProductDetails} />
                 </Switch>
