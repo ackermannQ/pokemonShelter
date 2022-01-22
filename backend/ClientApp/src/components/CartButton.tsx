@@ -4,15 +4,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface CartIconProps {
-    badgeContent: number | null;
+    badgeContent: number | undefined;
 }
 
-export default function CartIcon(props: CartIconProps) {
+export default function CartButton(props: CartIconProps) {
 
     return (
         <IconButton>
             <Link to='/basket'>
-                <Badge badgeContent={props.badgeContent ?? null} color="primary">
+                <Badge badgeContent={props.badgeContent ?? undefined} color="secondary">
                     <FlightTakeoffTwoToneIcon sx={{ color: 'white' }} />
                 </Badge>
             </Link>

@@ -1,11 +1,11 @@
 import { TableBody } from '@material-ui/core';
 import { Button, Divider, Table, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import { AxiosRequestConfig } from 'axios';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { manageError } from '../../api/errorManager';
 import CircularProgressWrapper from '../Wrapper/CircularProgressWrapper';
 import { getProductById } from './httpRepository';
 import { IProduct } from './IProduct';
@@ -18,7 +18,7 @@ export default function ProductDetails() {
     React.useEffect(() => {
         getProductById(id)
             .then((response: AxiosRequestConfig) => setProduct(response.data))
-            .catch(error => console.log(error))
+            .catch(manageError)
             .finally(() => setIsLoading(false));
     }, [id]);
 

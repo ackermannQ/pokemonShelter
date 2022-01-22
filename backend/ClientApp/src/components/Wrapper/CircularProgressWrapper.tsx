@@ -1,8 +1,9 @@
+import { CircularProgressProps } from '@material-ui/core';
 import { CircularProgress } from '@mui/material';
 import React from 'react';
 
-interface CircularProgressWrapperProps {
-    children: JSX.Element;
+interface CircularProgressWrapperProps extends CircularProgressProps {
+    children: JSX.Element[] | JSX.Element;
 
     isLoading: boolean;
 }

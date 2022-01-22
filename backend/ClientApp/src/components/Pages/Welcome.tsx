@@ -3,11 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography/Typography';
-import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { manageError } from '../../api/errorManager';
 import welcome from './images/welcome.jpg'
 
 const useStyles = makeStyles((theme) => ({
