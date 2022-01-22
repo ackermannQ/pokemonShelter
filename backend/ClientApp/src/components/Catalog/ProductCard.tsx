@@ -6,10 +6,12 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
+import { AxiosRequestConfig } from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { manageError } from '../../api/errorManager';
+import { useStoreContext } from '../../context/StoreContext';
 import { AddItem } from '../Basket/httpRepository';
 import { IProduct } from './IProduct';
 
@@ -19,10 +21,11 @@ interface ProductCardProps {
 
 export default function ProductCard(props: ProductCardProps) {
     const [isLoading, setIsLoading] = React.useState(false);
+    const { setBasket } = useStoreContext();
 
     function handleAddItem(productId: number) {
         setIsLoading(true);
-        AddItem(productId).catch(manageError).finally(() => setIsLoading(false));
+        AddItem(productId).then((response: AxiosRequestConfig) => setBasket(response.data)).catch(manageError).finally(() => setIsLoading(false));
     }
 
     return (

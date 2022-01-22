@@ -4,8 +4,9 @@ import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import * as Router from 'react-router-dom';
-import CartIcon from '../CartIcon';
+import { useStoreContext } from '../../context/StoreContext';
 
+import CartButton from '../CartButton';
 import pokeball from './images/pokeball.png'
 
 const useStyles = makeStyles(theme => ({
@@ -44,6 +45,8 @@ theme.typography.subtitle1 = {
 
 export default function SecondaryToolbar(props: SecondaryToolbarProps) {
     const classes = useStyles();
+    const { basket } = useStoreContext();
+    const itemsCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0)
 
     return (
         <React.Fragment>
@@ -73,8 +76,8 @@ export default function SecondaryToolbar(props: SecondaryToolbarProps) {
                             </ThemeProvider>
                         </Router.Link>
                     ))}
-                    <CartIcon
-                        badgeContent={null}
+                    <CartButton
+                        badgeContent={itemsCount}
                     />
                 </Toolbar>
             </AppBar>
