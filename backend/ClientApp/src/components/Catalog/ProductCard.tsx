@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 
 import { manageError } from '../../api/errorManager';
 import { useStoreContext } from '../../context/StoreContext';
-import { AddItem } from '../Basket/httpRepository';
+import { add } from '../Basket/httpRepository';
 import { IProduct } from './IProduct';
 
 interface ProductCardProps {
@@ -25,7 +25,7 @@ export default function ProductCard(props: ProductCardProps) {
 
     function handleAddItem(productId: number) {
         setIsLoading(true);
-        AddItem(productId).then((response: AxiosRequestConfig) => setBasket(response.data)).catch(manageError).finally(() => setIsLoading(false));
+        add(productId).then((response: AxiosRequestConfig) => setBasket(response.data)).catch(manageError).finally(() => setIsLoading(false));
     }
 
     return (

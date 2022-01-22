@@ -1,4 +1,5 @@
 import { TableBody } from '@material-ui/core';
+import { LoadingButton } from '@mui/lab';
 import { Button, Divider, Table, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { AxiosRequestConfig } from 'axios';
@@ -6,6 +7,8 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { manageError } from '../../api/errorManager';
+import { useStoreContext } from '../../context/StoreContext';
+import { add } from '../Basket/httpRepository';
 import CircularProgressWrapper from '../Wrapper/CircularProgressWrapper';
 import { getProductById } from './httpRepository';
 import { IProduct } from './IProduct';
@@ -14,6 +17,8 @@ export default function ProductDetails() {
     const { id } = useParams<{ id: string }>();
     const [product, setProduct] = React.useState<IProduct | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
+    const [isButtonLoading, setIsButtonLoading] = React.useState(false);
+    const { setBasket } = useStoreContext();
 
     React.useEffect(() => {
         getProductById(id)
@@ -21,6 +26,11 @@ export default function ProductDetails() {
             .catch(manageError)
             .finally(() => setIsLoading(false));
     }, [id]);
+
+    function handleAddItem(productId: number) {
+        setIsButtonLoading(true);
+        add(productId).then((response: AxiosRequestConfig) => setBasket(response.data)).catch(manageError).finally(() => setIsButtonLoading(false));
+    }
 
     return (
         <CircularProgressWrapper isLoading={isLoading}>
@@ -50,7 +60,8 @@ export default function ProductDetails() {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <Button component={Link} to='/shop/' color="inherit" size="large">Return</Button>
+                    {product ? <LoadingButton loading={isButtonLoading} onClick={() => handleAddItem(product.id)} color='inherit' size="large">Adopt</LoadingButton> : null}
+                    <Button component={Link} to='/shop/' color="inherit" size="small">Return</Button>
                 </Grid>
             </Grid>
         </CircularProgressWrapper>

@@ -27,15 +27,18 @@ export function StoreProvider({ children }: PropsWithChildren<any>) {
         const items = [...basket.items];
         const itemIndex = items.findIndex(i => i.productId === productId);
 
-        if (itemIndex > 0) {
-            let q = items[itemIndex].quantity;
-            q -= quantity;
+        if (itemIndex >= 0) {
+            items[itemIndex].quantity -= quantity;
 
-            if (q === 0) items.splice(itemIndex, 1);
+            if (items[itemIndex].quantity === 0) items.splice(itemIndex, 1);
             setBasket(prevState => {
                 return { ...prevState!, items }
             });
         }
+
+        console.log('items', items);
+        console.log('basket', basket);
+
     }
 
     return <StoreContext.Provider value={{ basket, setBasket, removeItem }}>
