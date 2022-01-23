@@ -4,8 +4,8 @@ import { Typography } from '@mui/material';
 import { AxiosRequestConfig } from 'axios';
 import React from 'react';
 
-import { manageError } from '../../api/errorManager';
-import CircularProgressWrapper from '../Wrapper/CircularProgressWrapper';
+import { manageError } from '../../../api/errorManager';
+import CircularProgressWrapper from '../../Wrapper/CircularProgressWrapper';
 import { getAllProducts } from './httpRepository';
 import { IProduct } from './IProduct';
 import ProductList from './ProductList';

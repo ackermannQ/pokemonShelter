@@ -10,9 +10,9 @@ import { AxiosRequestConfig } from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { manageError } from '../../api/errorManager';
-import { useStoreContext } from '../../context/StoreContext';
-import { add } from '../Basket/httpRepository';
+import { manageError } from '../../../api/errorManager';
+import { useStoreContext } from '../../../context/StoreContext';
+import { add } from '../../Basket/httpRepository';
 import { IProduct } from './IProduct';
 
 interface ProductCardProps {

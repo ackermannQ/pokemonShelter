@@ -6,10 +6,10 @@ import { AxiosRequestConfig } from 'axios';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { manageError } from '../../api/errorManager';
-import { useStoreContext } from '../../context/StoreContext';
-import { add } from '../Basket/httpRepository';
-import CircularProgressWrapper from '../Wrapper/CircularProgressWrapper';
+import { manageError } from '../../../api/errorManager';
+import { useStoreContext } from '../../../context/StoreContext';
+import { add } from '../../Basket/httpRepository';
+import CircularProgressWrapper from '../../Wrapper/CircularProgressWrapper';
 import { getProductById } from './httpRepository';
 import { IProduct } from './IProduct';
 
