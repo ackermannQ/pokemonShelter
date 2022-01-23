@@ -11,7 +11,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { manageError } from '../../../api/errorManager';
-import { useStoreContext } from '../../../context/StoreContext';
+import { useAppDispatch } from '../../../store/configureStore';
+import { setBasket } from '../../Basket/basketSlice';
 import { add } from '../../Basket/httpRepository';
 import { IProduct } from './IProduct';
 
@@ -21,11 +22,11 @@ interface ProductCardProps {
 
 export default function ProductCard(props: ProductCardProps) {
     const [isLoading, setIsLoading] = React.useState(false);
-    const { setBasket } = useStoreContext();
+    const dispatch = useAppDispatch();
 
     function handleAddItem(productId: number) {
         setIsLoading(true);
-        add(productId).then((response: AxiosRequestConfig) => setBasket(response.data)).catch(manageError).finally(() => setIsLoading(false));
+        add(productId).then((response: AxiosRequestConfig) => dispatch(setBasket(response.data))).catch(manageError).finally(() => setIsLoading(false));
     }
 
     return (

@@ -1,26 +1,28 @@
+import { AxiosRequestConfig } from 'axios';
+import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
+import { manageError } from './api/errorManager';
 import Basket from './components/Basket';
-import Catalog from './components/Catalog';
-import ProductDetails from './components/Catalog/ProductDetails';
+import { setBasket } from './components/Basket/basketSlice';
+import { getBasket } from './components/Basket/httpRepository';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import About from './components/Pages/About';
+import Catalog from './components/Pages/Catalog';
+import ProductDetails from './components/Pages/Catalog/ProductDetails';
+import Checkout from './components/Pages/Checkout';
 import Welcome from './components/Pages/Welcome';
+import CircularProgressWrapper from './components/Wrapper/CircularProgressWrapper';
+import getCookie from './miscellanous/getCookie';
+import { useAppDispatch } from './store/configureStore';
 
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css'
-import { useStoreContext } from './context/StoreContext';
-import React from 'react';
-import getCookie from './miscellanous/getCookie';
-import { getBasket } from './components/Basket/httpRepository';
-import { AxiosRequestConfig } from 'axios';
-import { manageError } from './api/errorManager';
-import CircularProgressWrapper from './components/Wrapper/CircularProgressWrapper';
 
 export default function App() {
-    const { setBasket } = useStoreContext();
+    const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
@@ -28,14 +30,14 @@ export default function App() {
 
         if (buyerId) {
             getBasket()
-                .then((basket: AxiosRequestConfig) => setBasket(basket.data))
+                .then((basket: AxiosRequestConfig) => dispatch(setBasket(basket.data)))
                 .catch(manageError)
                 .finally(() => setIsLoading(false));
         } else {
             setIsLoading(false);
         }
 
-    }, [setBasket]);
+    }, [dispatch]);
 
     return (
         <div className="App">
@@ -57,6 +59,9 @@ export default function App() {
                             <Basket />
                         </Route>
                         <Route path="/shop/:id" exact component={ProductDetails} />
+                        <Route path="/checkout" exact>
+                            <Checkout />
+                        </Route>
                     </Switch>
                     <Footer />
                 </BrowserRouter>

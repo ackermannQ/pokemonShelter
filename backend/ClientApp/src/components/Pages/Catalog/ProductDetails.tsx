@@ -7,7 +7,8 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { manageError } from '../../../api/errorManager';
-import { useStoreContext } from '../../../context/StoreContext';
+import { useAppDispatch } from '../../../store/configureStore';
+import { setBasket } from '../../Basket/basketSlice';
 import { add } from '../../Basket/httpRepository';
 import CircularProgressWrapper from '../../Wrapper/CircularProgressWrapper';
 import { getProductById } from './httpRepository';
@@ -18,7 +19,8 @@ export default function ProductDetails() {
     const [product, setProduct] = React.useState<IProduct | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
     const [isButtonLoading, setIsButtonLoading] = React.useState(false);
-    const { setBasket } = useStoreContext();
+    const dispatch = useAppDispatch();
+
 
     React.useEffect(() => {
         getProductById(id)
@@ -29,7 +31,7 @@ export default function ProductDetails() {
 
     function handleAddItem(productId: number) {
         setIsButtonLoading(true);
-        add(productId).then((response: AxiosRequestConfig) => setBasket(response.data)).catch(manageError).finally(() => setIsButtonLoading(false));
+        add(productId).then((response: AxiosRequestConfig) => dispatch(setBasket(response.data))).catch(manageError).finally(() => setIsButtonLoading(false));
     }
 
     return (

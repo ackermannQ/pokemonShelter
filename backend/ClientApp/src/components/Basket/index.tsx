@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography/Typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { useStoreContext } from '../../context/StoreContext';
+import { useAppSelector } from '../../store/configureStore';
 import Table from './Table/index';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Basket() {
     const classes = useStyles();
-    const { basket } = useStoreContext();
+    const { basket } = useAppSelector(state => state.basket);
 
     return (
         <div className={classes.title}>
