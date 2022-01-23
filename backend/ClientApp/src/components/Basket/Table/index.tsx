@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import * as React from 'react';
+
 import { manageError } from '../../../api/errorManager';
 import { useStoreContext } from '../../../context/StoreContext';
 import { remove } from '../httpRepository';
-
 import { IBasket } from '../interfaces';
 import sad from './images/sad.gif'
 import buildRows, { buildColumns, getTotal } from './rowsAndColumns';
@@ -30,7 +30,7 @@ export default function Table(props: TableProps) {
 
     return (
         <div style={{ height: 350, width: '100%' }}>
-            {props.basket ?
+            {props.basket && props.basket.items.length > 0 ?
                 <>
                     <DataGrid
                         rows={rows ?? []}
@@ -41,7 +41,7 @@ export default function Table(props: TableProps) {
                     <Typography style={{ marginTop: '2%' }} variant="h6">Total: {(total / 10).toFixed(2)} €</Typography>
                 </> :
                 <>
-                    <Typography style={{ marginTop: '10%', marginBottom: '5%' }} variant="h6">Your don't want to adopt yet ...</Typography>
+                    <Typography style={{ marginBottom: '5%' }} variant="h6">You don't want to adopt yet ...</Typography>
                     <img src={sad} alt="Sad" />
                 </>}
         </div>

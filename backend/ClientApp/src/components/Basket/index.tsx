@@ -36,17 +36,20 @@ export default function Basket() {
                 </Typography>
                 <Grid className={classes.content} container spacing={4}>
                     <Grid item xs={12} sm={12} md={12}>
-                        <Typography gutterBottom variant="h4" component="h2" color="textSecondary">
-                            Remember to take good care of your new friend.
-                        </Typography>
-                        <Typography style={{ marginBottom: '40px' }} gutterBottom variant="h6" component="h2" color="textSecondary">
-                            We will check in every once in a while 👍
-                        </Typography>
+                        {basket && basket.items.length > 0 &&
+                            <>
+                                <Typography gutterBottom variant="h4" component="h2" color="textSecondary">
+                                    Remember to take good care of your new friend.
+                                </Typography>
+                                <Typography style={{ marginBottom: '40px' }} gutterBottom variant="h6" component="h2" color="textSecondary">
+                                    We will check in every once in a while 👍
+                                </Typography>
+                            </>}
                         <Table basket={basket} />
                     </Grid>
                     <Container className={classes.content} maxWidth="sm">
                         <Button style={{ marginLeft: '10px' }} component={Link} to='/shop/' variant="outlined" size="large" color="inherit">Return</Button>
-                        {basket && <Button size="large" color="inherit" component={Link} to='/shop/'>Yay!</Button>}
+                        {basket && basket.items.length > 0 && <Button size="large" color="inherit" component={Link} to='/checkout/'>Yay!</Button>}
                     </Container>
                 </Grid>
             </Container>

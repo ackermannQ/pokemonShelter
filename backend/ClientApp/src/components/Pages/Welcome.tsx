@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography/Typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import welcome from './images/welcome.jpg'
 
@@ -25,6 +26,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Welcome() {
     const classes = useStyles();
 
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            showHappyNotification();
+        }, 3000);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <div className={classes.title}>
             <Container maxWidth="md">
@@ -44,7 +52,6 @@ export default function Welcome() {
                     <Container className={classes.content} maxWidth="sm">
                         <Button size="large" color="inherit" component={Link} to='/shop/'>Adopt</Button>
                         <Button style={{ marginLeft: '10px' }} component={Link} to='/about/' variant="outlined" size="large" color="inherit">About us</Button>
-                        {/* <Button style={{ marginLeft: '10px' }} variant="outlined" size="large" color="secondary" onClick={triggerError}>Error Test</Button> */}
                     </Container>
                 </Grid>
             </Container>
@@ -53,6 +60,13 @@ export default function Welcome() {
 
 }
 
-// function triggerError() {
-//     axios.get('/api/Buggy/validation-error').catch(manageError);
-// }
+function showHappyNotification() {
+
+    toast('Thank you so much for being here! 💕', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+    });
+}
