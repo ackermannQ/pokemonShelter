@@ -7,6 +7,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAppSelector } from '../../store/configureStore';
+import { IBasket } from './interfaces';
 import Table from './Table/index';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,10 +40,10 @@ export default function Basket() {
                         {basket && basket.items.length > 0 &&
                             <>
                                 <Typography gutterBottom variant="h4" component="h2" color="textSecondary">
-                                    Remember to take good care of your new friend.
+                                    {addPlural("Remember to take good care of your new friend", basket)}
                                 </Typography>
                                 <Typography style={{ marginBottom: '40px' }} gutterBottom variant="h6" component="h2" color="textSecondary">
-                                    We will check in every once in a while 👍
+                                    We will check-in every once in a while 👍
                                 </Typography>
                             </>}
                         <Table basket={basket} />
@@ -55,4 +56,14 @@ export default function Basket() {
             </Container>
         </div>
     )
+}
+
+function addPlural(sentence: string, basket: IBasket) {
+    const basketItems = basket.items;
+
+    if (basketItems.length > 1 || basketItems[0].quantity > 1) {
+        return sentence + 's.'
+    }
+
+    return sentence + '.'
 }
