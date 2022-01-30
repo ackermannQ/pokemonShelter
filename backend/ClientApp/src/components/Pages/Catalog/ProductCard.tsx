@@ -6,14 +6,11 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
-import { AxiosRequestConfig } from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { manageError } from '../../../api/errorManager';
-import { useAppDispatch } from '../../../store/configureStore';
-import { setBasket } from '../../Basket/basketSlice';
-import { add } from '../../Basket/httpRepository';
+import { useAppDispatch, useAppSelector } from '../../../store/configureStore';
+import { addBasketItemAsync } from '../../Basket/basketSlice';
 import { IProduct } from './IProduct';
 
 interface ProductCardProps {
@@ -21,13 +18,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard(props: ProductCardProps) {
-    const [isLoading, setIsLoading] = React.useState(false);
+    const { status } = useAppSelector(state => state.basket);
     const dispatch = useAppDispatch();
-
-    function handleAddItem(productId: number) {
-        setIsLoading(true);
-        add(productId).then((response: AxiosRequestConfig) => dispatch(setBasket(response.data))).catch(manageError).finally(() => setIsLoading(false));
-    }
 
     return (
         <>
@@ -60,7 +52,7 @@ export default function ProductCard(props: ProductCardProps) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <LoadingButton loading={isLoading} onClick={() => handleAddItem(props.product.id)} color='inherit' size="small">Adopt</LoadingButton>
+                    <LoadingButton loading={status.includes('pendingAddItem' + props.product.id)} onClick={() => dispatch(addBasketItemAsync({ productId: props.product.id }))} color='inherit' size="small">Adopt</LoadingButton>
                     <Button style={{ marginLeft: '10px' }} component={Link} to={`/shop/${props.product.id}`} variant="outlined" size="small">More</Button>
                 </CardActions>
             </Card>

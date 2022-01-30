@@ -1,13 +1,10 @@
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@mui/material';
-import { AxiosRequestConfig } from 'axios';
+import { CircularProgress, Typography } from '@mui/material';
 import React from 'react';
 
-import { manageError } from '../../../api/errorManager';
-import CircularProgressWrapper from '../../Wrapper/CircularProgressWrapper';
-import { getAllProducts } from './httpRepository';
-import { IProduct } from './IProduct';
+import { useAppDispatch, useAppSelector } from '../../../store/configureStore';
+import { fetchProductsAsync, productSelectors } from './catalogSlice';
 import ProductList from './ProductList';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,26 +16,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Catalog() {
     const classes = useStyles();
-    const [products, setProducts] = React.useState<IProduct[]>([]);
-    const [isLoading, setIsLoading] = React.useState(true);
+    const products = useAppSelector(productSelectors.selectAll);
+    const { productLoaded, status } = useAppSelector(state => state.catalog);
+    const dispatch = useAppDispatch();
 
     React.useEffect(() => {
-        getAllProducts()
-            .then((response: AxiosRequestConfig) => setProducts(response.data))
-            .catch(manageError)
-            .finally(() => setIsLoading(false));
-    }, []);
+        if (!productLoaded) {
+            dispatch(fetchProductsAsync());
+        }
 
+    }, [dispatch, productLoaded]);
+
+    if (status.includes('pending')) return <CircularProgress color="inherit" />;
 
     return (<>
         <Typography className={classes.title} component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
             Our little friends
         </Typography>
         <Container>
-            <CircularProgressWrapper isLoading={isLoading}>
-                <ProductList products={products} />
-            </CircularProgressWrapper>
+            <ProductList products={products} />
         </Container>
-    </>
-    );
+    </>);
 }

@@ -14,7 +14,7 @@ export function getBasket() {
  * @param {number} productId Id corresponding to the product to add
  * @param {number} quantity Quantity of the product to add, 1 by default
  */
-export function add(productId: number, quantity: number = 1) {
+export function add(productId: number, quantity: number = 1): Promise<any> { // Cause a TS error because the return type is AsyncThunkPayloadCreator<IBasket, { productId: number; quantity: number; } in the basketSlice so I put any instead in return type
     return axios.post(`/api/basket?productId=${productId}&quantity=${quantity}`, {});
 }
 

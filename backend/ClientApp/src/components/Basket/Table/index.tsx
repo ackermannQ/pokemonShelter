@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { manageError } from '../../../api/errorManager';
 import { useAppDispatch } from '../../../store/configureStore';
-import { removeItem } from '../basketSlice';
+import { removeBasketItemAsync } from '../basketSlice';
 import { remove } from '../httpRepository';
 import { IBasket } from '../interfaces';
 import sad from './images/sad.gif'
@@ -22,7 +22,7 @@ export default function Table(props: TableProps) {
     const columns = buildColumns(handleRemoveItem);
 
     function handleRemoveItem(productId: number) {
-        remove(productId).then(() => dispatch(removeItem({ productId, quantity: 1 }))).catch(manageError);
+        remove(productId).then(() => dispatch(removeBasketItemAsync({ productId, quantity: 1 }))).catch(manageError);
     }
 
     React.useEffect(() => {

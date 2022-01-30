@@ -62,7 +62,7 @@ export default function Welcome() {
 
 function showHappyNotification() {
 
-    toast('Thank you so much for being here! 💕', {
+    toast('Thank you so much for being here! ❤️', {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,

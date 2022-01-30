@@ -46,7 +46,7 @@ theme.typography.subtitle1 = {
 export default function SecondaryToolbar(props: SecondaryToolbarProps) {
     const classes = useStyles();
     const { basket } = useAppSelector(state => state.basket);
-    const itemsCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0)
+    const itemsCount = basket?.items ? basket?.items.reduce((sum, item) => sum + item.quantity, 0) : 0;
 
     return (
         <React.Fragment>

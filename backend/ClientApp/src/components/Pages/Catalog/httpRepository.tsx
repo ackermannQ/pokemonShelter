@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export function getAllProducts() {
+export function getAllProducts(): Promise<any> {
     return axios.get('/api/products/');
 }
 
-export function getProductById(id: string) {
+export function getProductById(id: string): Promise<any> {
 
     return axios.get(`/api/products/${id}`)
 }

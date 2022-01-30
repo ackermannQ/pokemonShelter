@@ -1,41 +1,42 @@
 import { TableBody } from '@material-ui/core';
 import { LoadingButton } from '@mui/lab';
-import { Button, Divider, Table, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
+import { Button, CircularProgress, Divider, Table, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { AxiosRequestConfig } from 'axios';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import { manageError } from '../../../api/errorManager';
-import { useAppDispatch } from '../../../store/configureStore';
+import { useAppDispatch, useAppSelector } from '../../../store/configureStore';
 import { setBasket } from '../../Basket/basketSlice';
 import { add } from '../../Basket/httpRepository';
 import CircularProgressWrapper from '../../Wrapper/CircularProgressWrapper';
-import { getProductById } from './httpRepository';
-import { IProduct } from './IProduct';
+import { fetchProductAsync, productSelectors } from './catalogSlice';
 
 export default function ProductDetails() {
     const { id } = useParams<{ id: string }>();
-    const [product, setProduct] = React.useState<IProduct | null>(null);
-    const [isLoading, setIsLoading] = React.useState(true);
+    const product = useSelector((state: any) => productSelectors.selectById(state, id));
     const [isButtonLoading, setIsButtonLoading] = React.useState(false);
     const dispatch = useAppDispatch();
+    const { status } = useAppSelector(state => state.catalog);
 
 
     React.useEffect(() => {
-        getProductById(id)
-            .then((response: AxiosRequestConfig) => setProduct(response.data))
-            .catch(manageError)
-            .finally(() => setIsLoading(false));
-    }, [id]);
+        if (!product) dispatch(fetchProductAsync(parseInt(id)));
+    }, [dispatch, id, product]);
 
     function handleAddItem(productId: number) {
         setIsButtonLoading(true);
         add(productId).then((response: AxiosRequestConfig) => dispatch(setBasket(response.data))).catch(manageError).finally(() => setIsButtonLoading(false));
     }
 
+    if (status.includes('pending')) return <CircularProgress color="inherit" />;
+
+    if (!product) return <p>No products found!</p>
+
     return (
-        <CircularProgressWrapper isLoading={isLoading}>
+        <CircularProgressWrapper isLoading={status.includes('fulfilled')}>
             <Grid container spacing={6}>
                 <Grid item xs={6}>
                     <img src={product?.pictureUrl} alt={product?.name} style={{ width: '50%' }} />
