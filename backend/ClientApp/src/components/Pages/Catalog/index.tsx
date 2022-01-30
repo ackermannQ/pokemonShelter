@@ -4,7 +4,7 @@ import { CircularProgress, Typography } from '@mui/material';
 import React from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../store/configureStore';
-import { fetchProductsAsync, productSelectors } from './catalogSlice';
+import { fetchFilters, fetchProductsAsync, productSelectors } from './catalogSlice';
 import ProductList from './ProductList';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Catalog() {
     const classes = useStyles();
     const products = useAppSelector(productSelectors.selectAll);
-    const { productLoaded, status } = useAppSelector(state => state.catalog);
+    const { productLoaded, status, filtersLoaded } = useAppSelector(state => state.catalog);
     const dispatch = useAppDispatch();
 
     React.useEffect(() => {
@@ -26,6 +26,13 @@ export default function Catalog() {
         }
 
     }, [dispatch, productLoaded]);
+
+    React.useEffect(() => {
+        if (!filtersLoaded) {
+            dispatch(fetchFilters());
+        }
+
+    }, [dispatch, filtersLoaded]);
 
     if (status.includes('pending')) return <CircularProgress color="inherit" />;
 
