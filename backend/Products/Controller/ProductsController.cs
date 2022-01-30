@@ -1,7 +1,9 @@
 ﻿using backend.Data;
+using backend.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace backend.Products.Controller
@@ -18,9 +20,18 @@ namespace backend.Products.Controller
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts()
+        public async Task<ActionResult<List<Product>>> GetProducts(
+            string orderBy,
+            string searchTerm,
+            string types)
         {
-            return await _context.Products.ToListAsync();
+            var query = _context.Products
+                .Sort(orderBy)
+                .Search(searchTerm)
+                .Filter(types)
+                .AsQueryable();
+
+            return await query.ToListAsync();
         }
 
         [HttpGet("{id}")]
