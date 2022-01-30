@@ -33,7 +33,7 @@ namespace backend.Extensions
         {
             var typeList = new List<string>();
 
-            if (!string.IsNullOrEmpty(types.ToLower()))
+            if (!string.IsNullOrEmpty(types))
             {
                 typeList.AddRange(types.ToLower().Split(",").ToList());
             }
